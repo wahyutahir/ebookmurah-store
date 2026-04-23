@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{:: .content})}">
+<body>
+    <div class="content" th:fragment="content">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold gold-text mb-2">Program 90 Hari</h1>
+                <p class="text-zinc-400">Transformasi bertahap menuju versi terbaik diri Anda</p>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800 mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-xl font-semibold">Progress Anda</h2>
+                        <p class="text-zinc-400" th:text="'Hari ' + ${completedDays} + ' dari 90 hari'">Hari 0 dari 90 hari</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-3xl font-bold gold-text" th:text="${#numbers.formatDecimal(progressPercentage, 1, 0)} + '%'">0%</p>
+                    </div>
+                </div>
+                <div class="w-full bg-zinc-800 rounded-full h-4">
+                    <div class="gold-gradient h-4 rounded-full transition-all duration-500" th:style="'width: ' + ${progressPercentage} + '%'"></div>
+                </div>
+            </div>
+
+            <!-- Phase Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gold-600/20 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-gold-400 font-bold">1</span>
+                        </div>
+                        <h3 class="font-semibold">Pembersihan Trauma</h3>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-2">Hari 1-30</p>
+                    <p class="text-gold-400 text-sm font-semibold">"Mental Nyam-Nyam Berkurang"</p>
+                </div>
+                <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gold-600/20 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-gold-400 font-bold">2</span>
+                        </div>
+                        <h3 class="font-semibold">Instalasi Potensi</h3>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-2">Hari 31-60</p>
+                    <p class="text-gold-400 text-sm font-semibold">"Meraut Bambu Karier"</p>
+                </div>
+                <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gold-600/20 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-gold-400 font-bold">3</span>
+                        </div>
+                        <h3 class="font-semibold">Market Launch & Value</h3>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-2">Hari 61-90</p>
+                    <p class="text-gold-400 text-sm font-semibold">"Menjadi Orang yang Dicari Dunia"</p>
+                </div>
+            </div>
+
+            <!-- Current Day Section -->
+            <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800 mb-8">
+                <h2 class="text-xl font-semibold mb-4">Hari Ini</h2>
+                <div th:if="${progressList.isEmpty() or progressList[0].currentDay == 1}">
+                    <p class="text-zinc-400 mb-4">Mulai perjalanan Anda dari hari ke-1</p>
+                    <form th:action="@{/app/timeboxing/update}" method="post">
+                        <input type="hidden" name="currentDay" value="1">
+                        <div class="mb-4">
+                            <label class="block text-zinc-300 mb-2">Catatan Hari Ini</label>
+                            <textarea name="dailyNote" rows="4" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition" placeholder="Tulis refleksi atau catatan hari ini..."></textarea>
+                        </div>
+                        <button type="submit" class="gold-gradient text-zinc-900 font-bold px-6 py-3 rounded-lg hover:opacity-90 transition">
+                            Selesaikan Hari Ini
+                        </button>
+                    </form>
+                </div>
+                <div th:unless="${progressList.isEmpty() or progressList[0].currentDay == 1}">
+                    <div class="flex justify-between items-center mb-4">
+                        <p class="text-zinc-400" th:text="'Hari ke-' + ${progressList[progressList.size() - 1].currentDay}">Hari ke-X</p>
+                        <form th:action="@{/app/timeboxing/advance}" method="post">
+                            <button type="submit" class="bg-gold-600 hover:bg-gold-500 text-white px-4 py-2 rounded-lg transition">
+                                Lanjut Hari Berikutnya
+                            </button>
+                        </form>
+                    </div>
+                    <div class="bg-zinc-800 rounded-lg p-4">
+                        <p class="text-gold-400 font-semibold mb-2" th:text="${progressList[progressList.size() - 1].motivationText}">Motivasi</p>
+                        <p class="text-zinc-300 text-sm" th:text="${progressList[progressList.size() - 1].dailyNote} ?: 'Belum ada catatan'">Catatan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress History -->
+            <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
+                <h2 class="text-xl font-semibold mb-4">Riwayat Progress</h2>
+                <div th:if="${progressList.isEmpty()}" class="text-center py-8 text-zinc-400">
+                    Belum ada progress. Mulai perjalanan Anda hari ini!
+                </div>
+                <div th:unless="${progressList.isEmpty()}" class="space-y-3">
+                    <div th:each="progress : ${progressList}" class="bg-zinc-800 rounded-lg p-4 flex justify-between items-center">
+                        <div>
+                            <p class="font-semibold" th:text="'Hari ke-' + ${progress.currentDay}">Hari ke-X</p>
+                            <p class="text-zinc-400 text-sm" th:text="${progress.phaseName}">Fase</p>
+                        </div>
+                        <div class="text-right">
+                            <span th:if="${progress.completed}" class="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm">Selesai</span>
+                            <span th:unless="${progress.completed}" class="bg-yellow-900/30 text-yellow-400 px-3 py-1 rounded-full text-sm">In Progress</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

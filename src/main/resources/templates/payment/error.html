@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Gagal - EbookMurah Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        zinc: { 950: '#09090b', 900: '#18181b', 800: '#27272a', 700: '#3f3f46' },
+                        gold: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #09090b; }
+        .gold-gradient { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%); }
+        .gold-text { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-zinc-950">
+    <div class="max-w-lg w-full mx-4">
+        <div class="bg-zinc-900 rounded-xl p-8 border border-zinc-800 text-center">
+            <div class="w-24 h-24 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold gold-text mb-4">Pembayaran Gagal</h1>
+            <p class="text-zinc-400 mb-6">Maaf, pembayaran Anda tidak dapat diproses</p>
+            
+            <div class="bg-zinc-800 rounded-lg p-4 mb-6">
+                <p class="text-zinc-300 mb-2" th:text="'Order ID: ' + ${transaction.orderId}">Order ID</p>
+                <p class="text-zinc-400 text-sm">Silakan coba lagi atau hubungi support</p>
+            </div>
+
+            <div class="space-y-3">
+                <a th:href="@{/ebook/{slug}(slug=${ebook.slug})}" class="inline-block gold-gradient text-zinc-900 font-bold px-8 py-3 rounded-lg hover:opacity-90 transition w-full">
+                    Coba Lagi
+                </a>
+                <a th:href="@{/}" class="inline-block bg-zinc-800 text-white font-bold px-8 py-3 rounded-lg hover:bg-zinc-700 transition w-full">
+                    Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
