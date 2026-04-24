@@ -24,10 +24,19 @@
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <a th:href="@{/}" class="flex items-center">
                 <span class="text-2xl font-bold gold-text">EbookMurah</span>
+                <span class="ml-2 text-zinc-400">.store</span>
             </a>
-            <div class="flex items-center space-x-4">
-                <a th:href="@{/app/dashboard}" class="text-zinc-300">Dashboard</a>
-                <a th:href="@{/logout}" class="text-zinc-300">Logout</a>
+            <div class="flex items-center space-x-6">
+                <a th:href="@{/}" class="text-zinc-300 hover:text-gold-400 transition">Katalog Ebook</a>
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/app/dashboard}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Dashboard</a>
+                    <a th:href="@{/app/timeboxing}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Program 90 Hari</a>
+                    <a th:href="@{/logout}" class="text-zinc-300 hover:text-gold-400 transition">Logout</a>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Login</a>
+                    <a th:href="@{/register}" class="gold-gradient text-zinc-900 px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition">Daftar</a>
+                </div>
             </div>
         </div>
     </nav>

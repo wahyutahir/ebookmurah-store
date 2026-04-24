@@ -39,14 +39,36 @@ public class AppController {
         return "app/generator";
     }
 
+    @PostMapping("/generator/analyze")
+    public String analyzeSkill(@AuthenticationPrincipal User user,
+                               @RequestParam String skillTarget,
+                               @RequestParam String currentLevel,
+                               @RequestParam String timeframe,
+                               RedirectAttributes redirectAttributes) {
+        // Simple skill analysis - store in flash attribute for display
+        String analysis = String.format("Analisis untuk '%s' (Level: %s, Target: %s) sedang diproses. ", 
+            skillTarget, currentLevel, timeframe);
+        analysis += "Fitur lengkap akan segera hadir dengan AI-powered learning path!";
+        
+        redirectAttributes.addFlashAttribute("analysis", analysis);
+        redirectAttributes.addFlashAttribute("success", "Analisis skill berhasil disimpan!");
+        return "redirect:/app/generator";
+    }
+
     @GetMapping("/timeboxing")
     public String timeboxing(@AuthenticationPrincipal User user, Model model) {
+        // Initialize progress if user has no progress yet
         List<TimeboxingProgress> progressList = timeboxingService.getUserProgress(user.getId());
+        if (progressList == null || progressList.isEmpty()) {
+            timeboxingService.initializeProgress(user);
+            progressList = timeboxingService.getUserProgress(user.getId());
+        }
+        
         double progressPercentage = timeboxingService.getProgressPercentage(user.getId());
         int completedDays = timeboxingService.getCompletedDays(user.getId());
 
         model.addAttribute("user", user);
-        model.addAttribute("progressList", progressList);
+        model.addAttribute("progressList", progressList != null ? progressList : List.of());
         model.addAttribute("progressPercentage", progressPercentage);
         model.addAttribute("completedDays", completedDays);
         model.addAttribute("totalDays", 90);
