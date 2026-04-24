@@ -2,7 +2,7 @@ package com.ebookmurah.service;
 
 import com.ebookmurah.entity.Ebook;
 import com.ebookmurah.repository.EbookRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,10 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class EbookService {
 
     private final EbookRepository ebookRepository;
+
+    @Autowired
+    public EbookService(EbookRepository ebookRepository) {
+        this.ebookRepository = ebookRepository;
+    }
 
     public List<Ebook> getAllEbooks() {
         return ebookRepository.findAll();

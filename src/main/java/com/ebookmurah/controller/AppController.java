@@ -1,7 +1,6 @@
 package com.ebookmurah.controller;
 
 import com.ebookmurah.entity.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/app")
-@RequiredArgsConstructor
 public class AppController {
 
     @GetMapping("/dashboard")
