@@ -28,6 +28,7 @@
             </a>
             <div class="flex items-center space-x-6">
                 <a th:href="@{/}" class="text-zinc-300 hover:text-gold-400 transition">Katalog Ebook</a>
+                <a th:href="@{/admin/upload}" class="text-gold-400 hover:text-gold-300 transition">Admin</a>
                 <div sec:authorize="isAuthenticated()">
                     <a th:href="@{/app/dashboard}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Dashboard</a>
                     <a th:href="@{/app/timeboxing}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Program 90 Hari</a>

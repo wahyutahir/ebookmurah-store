@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{:: .content})}">
+<body>
+    <div class="content" th:fragment="content">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold gold-text mb-2">Admin - Upload Ebook</h1>
+                <p class="text-zinc-400">Tambahkan ebook baru ke katalog penjualan</p>
+            </div>
+
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="bg-green-900/30 border border-green-600 text-green-400 rounded-lg p-4 mb-6">
+                <p th:text="${success}">Success message</p>
+            </div>
+            <div th:if="${error}" class="bg-red-900/30 border border-red-600 text-red-400 rounded-lg p-4 mb-6">
+                <p th:text="${error}">Error message</p>
+            </div>
+
+            <!-- Upload Form -->
+            <div class="bg-zinc-900 rounded-xl p-8 border border-zinc-800">
+                <form th:action="@{/admin/upload}" method="post" class="space-y-6">
+                    <div>
+                        <label class="block text-zinc-300 mb-2 font-medium">Judul Ebook</label>
+                        <input type="text" name="title" required
+                               class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                               placeholder="Masukkan judul ebook...">
+                    </div>
+
+                    <div>
+                        <label class="block text-zinc-300 mb-2 font-medium">Harga (Rp)</label>
+                        <input type="number" name="price" required min="0" step="0.01"
+                               class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                               placeholder="Contoh: 99000">
+                    </div>
+
+                    <div>
+                        <label class="block text-zinc-300 mb-2 font-medium">Deskripsi</label>
+                        <textarea name="description" rows="4" required
+                                  class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                                  placeholder="Deskripsikan isi ebook..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-zinc-300 mb-2 font-medium">Link Gambar Cover</label>
+                        <input type="url" name="coverImageUrl" required
+                               class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                               placeholder="https://example.com/cover.jpg">
+                        <p class="text-zinc-500 text-sm mt-1">Masukkan URL gambar cover ebook</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-zinc-300 mb-2 font-medium">Link Download (PDF)</label>
+                        <input type="url" name="downloadUrl" required
+                               class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                               placeholder="https://example.com/ebook.pdf">
+                        <p class="text-zinc-500 text-sm mt-1">Link ini akan diberikan ke pembeli setelah pembayaran</p>
+                    </div>
+
+                    <div class="flex space-x-4 pt-4">
+                        <button type="submit" class="flex-1 gold-gradient text-zinc-900 font-bold py-3 rounded-lg hover:opacity-90 transition">
+                            Upload Ebook
+                        </button>
+                        <a th:href="@{/}" class="px-6 py-3 border border-zinc-700 text-zinc-300 rounded-lg hover:bg-zinc-800 transition">
+                            Kembali
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Info Card -->
+            <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800 mt-8">
+                <h3 class="font-semibold mb-3 gold-text">Petunjuk Upload:</h3>
+                <ul class="space-y-2 text-zinc-400 text-sm">
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 gold-gradient rounded-full mr-3 mt-1.5"></span>
+                        Pastikan link gambar dan PDF bisa diakses publik
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 gold-gradient rounded-full mr-3 mt-1.5"></span>
+                        Ebook akan langsung muncul di halaman katalog setelah upload
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-2 h-2 gold-gradient rounded-full mr-3 mt-1.5"></span>
+                        Pembeli akan mendapatkan link download setelah pembayaran sukses
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
