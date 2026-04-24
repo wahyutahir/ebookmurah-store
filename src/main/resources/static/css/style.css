@@ -1,3 +1,22 @@
-.gold-gradient { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%); }
-.gold-text { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-img { max-width: 100%; height: auto; }
+/* Force dark background - highest specificity */
+html, body {
+    background-color: #09090b !important;
+    color: #fafafa !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure all content has dark background */
+* {
+    background-color: transparent;
+}
+
+.gold-gradient { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important; }
+.gold-text { 
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important; 
+    -webkit-background-clip: text !important; 
+    -webkit-text-fill-color: transparent !important; 
+    background-clip: text !important; 
+}
+img { max-width: 100% !important; height: auto !important; }
