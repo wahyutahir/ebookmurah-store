@@ -28,14 +28,14 @@
             </a>
             <div class="flex items-center space-x-6">
                 <a th:href="@{/}" class="text-zinc-300 hover:text-gold-400 transition">Katalog Ebook</a>
-                <a th:href="@{/admin/upload}" class="text-gold-400 hover:text-gold-300 transition">Admin</a>
-                <div sec:authorize="isAuthenticated()">
-                    <a th:href="@{/app/dashboard}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Dashboard</a>
-                    <a th:href="@{/app/timeboxing}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Program 90 Hari</a>
+                <div sec:authorize="isAuthenticated()" class="flex items-center space-x-4">
+                    <a th:href="@{/app/dashboard}" class="text-zinc-300 hover:text-gold-400 transition">Dashboard</a>
+                    <a th:href="@{/app/generator}" class="text-zinc-300 hover:text-gold-400 transition">Skill Analyzer</a>
+                    <a th:href="@{/app/timeboxing}" class="text-zinc-300 hover:text-gold-400 transition">Program 90 Hari</a>
                     <a th:href="@{/logout}" class="text-zinc-300 hover:text-gold-400 transition">Logout</a>
                 </div>
-                <div sec:authorize="isAnonymous()">
-                    <a th:href="@{/login}" class="text-zinc-300 hover:text-gold-400 transition mr-4">Login</a>
+                <div sec:authorize="isAnonymous()" class="flex items-center space-x-4">
+                    <a th:href="@{/login}" class="text-zinc-300 hover:text-gold-400 transition">Login</a>
                     <a th:href="@{/register}" class="gold-gradient text-zinc-900 px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition">Daftar</a>
                 </div>
             </div>

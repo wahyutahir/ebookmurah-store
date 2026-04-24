@@ -31,7 +31,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/ebook/**", "/login", "/register", "/payment/**", "/api/payment/**", "/static/**", "/css/**", "/js/**", "/images/**", "/admin/**", "/h2-console/**").permitAll()
+                .requestMatchers("/", "/ebook/**", "/login", "/register", "/payment/**", "/api/payment/**", "/static/**", "/css/**", "/js/**", "/images/**", "/h2-console/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/app/**").authenticated()
                 .anyRequest().authenticated()
             )
@@ -70,6 +71,6 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/admin/**");
+        return (web) -> web.ignoring().requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**");
     }
 }

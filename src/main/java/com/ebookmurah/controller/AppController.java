@@ -34,7 +34,12 @@ public class AppController {
     }
 
     @GetMapping("/generator")
-    public String generator(@AuthenticationPrincipal User user, Model model) {
+    public String generator(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
+        // Check if user has paid purchase
+        if (!transactionService.hasPaidPurchase(user.getId())) {
+            redirectAttributes.addFlashAttribute("error", "Fitur ini hanya tersedia setelah pembelian ebook. Silakan beli ebook terlebih dahulu!");
+            return "redirect:/";
+        }
         model.addAttribute("user", user);
         return "app/generator";
     }
@@ -56,7 +61,13 @@ public class AppController {
     }
 
     @GetMapping("/timeboxing")
-    public String timeboxing(@AuthenticationPrincipal User user, Model model) {
+    public String timeboxing(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
+        // Check if user has paid purchase
+        if (!transactionService.hasPaidPurchase(user.getId())) {
+            redirectAttributes.addFlashAttribute("error", "Program 90 Hari hanya tersedia setelah pembelian ebook. Silakan beli ebook terlebih dahulu!");
+            return "redirect:/";
+        }
+        
         // Initialize progress if user has no progress yet
         List<TimeboxingProgress> progressList = timeboxingService.getUserProgress(user.getId());
         if (progressList == null || progressList.isEmpty()) {
@@ -72,6 +83,7 @@ public class AppController {
         model.addAttribute("progressPercentage", progressPercentage);
         model.addAttribute("completedDays", completedDays);
         model.addAttribute("totalDays", 90);
+        model.addAttribute("hasPaidPurchase", true);
 
         return "app/timeboxing";
     }

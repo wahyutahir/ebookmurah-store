@@ -73,4 +73,12 @@ public class TransactionService {
     public Optional<Transaction> getByMidtransTransactionId(String transactionId) {
         return transactionRepository.findByMidtransTransactionId(transactionId);
     }
+
+    public boolean hasPaidPurchase(Long userId) {
+        return transactionRepository.existsByUserIdAndStatus(userId, "SUCCESS");
+    }
+
+    public List<Transaction> getUserPaidTransactions(Long userId) {
+        return transactionRepository.findByUserIdAndStatus(userId, "SUCCESS");
+    }
 }
