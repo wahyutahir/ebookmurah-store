@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,28 +29,16 @@ public class AdminController {
     public String uploadEbook(@RequestParam String title,
                                @RequestParam String description,
                                @RequestParam BigDecimal price,
-                               @RequestParam String coverImageUrl,
-                               @RequestParam String downloadUrl,
+                               @RequestParam String coverUrl,
+                               @RequestParam String productLink,
                                RedirectAttributes redirectAttributes) {
         try {
-            // Generate slug from title
-            String slug = title.toLowerCase()
-                    .replaceAll("[^a-z0-9\\s-]", "")
-                    .replaceAll("\\s+", "-")
-                    .substring(0, Math.min(title.length(), 50));
-            
-            // Ensure unique slug
-            slug = slug + "-" + UUID.randomUUID().toString().substring(0, 8);
-
             Ebook ebook = Ebook.builder()
-                    .slug(slug)
                     .title(title)
                     .description(description)
                     .price(price)
-                    .coverImageUrl(coverImageUrl)
-                    .pdfFilePath(downloadUrl)
-                    .active(true)
-                    .stock(999) // Digital product, unlimited stock
+                    .coverUrl(coverUrl)
+                    .productLink(productLink)
                     .build();
 
             ebookService.createEbook(ebook);

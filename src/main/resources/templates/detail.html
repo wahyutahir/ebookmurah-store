@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{:: .content})}">
+<body>
+    <div class="content" th:fragment="content">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <!-- Breadcrumb -->
+            <nav class="mb-8">
+                <ol class="flex items-center space-x-2 text-zinc-400">
+                    <li><a th:href="@{/}" class="hover:text-gold-400">Home</a></li>
+                    <li>/</li>
+                    <li class="text-zinc-200" th:text="${ebook.title}">Judul Ebook</li>
+                </ol>
+            </nav>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Cover Image -->
+                <div class="bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
+                    <div class="aspect-[3/4] flex items-center justify-center overflow-hidden">
+                        <div th:if="${ebook.coverUrl}" class="w-full h-full overflow-hidden">
+                            <img th:src="${ebook.coverUrl}" th:alt="${ebook.title}" class="w-full h-full object-cover">
+                        </div>
+                        <div th:unless="${ebook.coverUrl}" class="text-zinc-600">
+                            <svg class="w-32 h-32 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div>
+                    <h1 class="text-4xl font-bold mb-4 gold-text" th:text="${ebook.title}">Judul Ebook</h1>
+                    <p class="text-zinc-400 mb-6" th:text="${ebook.description}">Deskripsi</p>
+                    
+                    <div class="text-4xl font-bold mb-8 gold-text" th:text="'Rp ' + ${ebook.price}">Rp 0</div>
+
+                    <!-- Purchase Button -->
+                    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                        <h3 class="text-xl font-semibold mb-4">Pembelian Langsung</h3>
+                        <a th:href="${ebook.productLink}" target="_blank" class="block w-full gold-gradient text-zinc-900 font-bold py-3 rounded-lg hover:opacity-90 transition text-center">
+                            Beli Sekarang
+                        </a>
+                        <p class="text-zinc-500 text-sm mt-3">Klik tombol di atas untuk langsung menuju halaman pembelian</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

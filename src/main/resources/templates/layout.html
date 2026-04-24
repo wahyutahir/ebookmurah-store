@@ -30,8 +30,6 @@
                 <a th:href="@{/}" class="text-zinc-300 hover:text-gold-400 transition">Katalog Ebook</a>
                 <div sec:authorize="isAuthenticated()" class="flex items-center space-x-4">
                     <a th:href="@{/app/dashboard}" class="text-zinc-300 hover:text-gold-400 transition">Dashboard</a>
-                    <a th:href="@{/app/generator}" class="text-zinc-300 hover:text-gold-400 transition">Skill Analyzer</a>
-                    <a th:href="@{/app/timeboxing}" class="text-zinc-300 hover:text-gold-400 transition">Program 90 Hari</a>
                     <a th:href="@{/logout}" class="text-zinc-300 hover:text-gold-400 transition">Logout</a>
                 </div>
                 <div sec:authorize="isAnonymous()" class="flex items-center space-x-4">

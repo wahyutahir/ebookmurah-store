@@ -19,7 +19,7 @@ public class PublicController {
     @GetMapping("/")
     public String home(Model model) {
         try {
-            List<Ebook> ebooks = ebookService.getAllActiveEbooks();
+            List<Ebook> ebooks = ebookService.getAllEbooks();
             model.addAttribute("ebooks", ebooks != null ? ebooks : List.of());
         } catch (Exception e) {
             model.addAttribute("ebooks", List.of());
@@ -27,12 +27,12 @@ public class PublicController {
         return "index";
     }
 
-    @GetMapping("/ebook/{slug}")
-    public String ebookDetail(@PathVariable String slug, Model model) {
-        Ebook ebook = ebookService.getBySlug(slug)
+    @GetMapping("/ebook/{id}")
+    public String ebookDetail(@PathVariable Long id, Model model) {
+        Ebook ebook = ebookService.getById(id)
                 .orElseThrow(() -> new RuntimeException("Ebook not found"));
         model.addAttribute("ebook", ebook);
-        return "ebook-detail";
+        return "detail";
     }
 
     @GetMapping("/login")
