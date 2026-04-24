@@ -27,7 +27,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 // Public access - no login required
-                .requestMatchers("/", "/ebook/**", "/login", "/register", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/login", "/register", "/ebook/**", "/css/**", "/js/**").permitAll()
                 // Admin access - ADMIN role only
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 // App access - authenticated users only

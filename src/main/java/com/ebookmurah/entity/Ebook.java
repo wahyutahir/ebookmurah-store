@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "ebooks")
 @Data
@@ -23,11 +21,11 @@ public class Ebook {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private Long price;
+
     @Column(columnDefinition = "TEXT")
     private String description;
-
-    @Column(nullable = false)
-    private BigDecimal price;
 
     private String coverUrl;
 

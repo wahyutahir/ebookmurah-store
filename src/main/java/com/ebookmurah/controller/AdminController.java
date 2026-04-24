@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.math.BigDecimal;
-
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class AdminController {
     @PostMapping("/upload")
     public String uploadEbook(@RequestParam String title,
                                @RequestParam String description,
-                               @RequestParam BigDecimal price,
+                               @RequestParam Long price,
                                @RequestParam String coverUrl,
                                @RequestParam String productLink,
                                RedirectAttributes redirectAttributes) {
