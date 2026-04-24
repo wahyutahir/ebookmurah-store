@@ -48,6 +48,32 @@ public class PaymentController {
         }
     }
 
+    @PostMapping("/payment/guest-order")
+    public String createGuestOrder(@RequestParam Long ebookId,
+                                   @RequestParam String fullName,
+                                   @RequestParam String email,
+                                   @RequestParam String whatsapp,
+                                   Model model) {
+        try {
+            Ebook ebook = ebookService.getById(ebookId)
+                    .orElseThrow(() -> new RuntimeException("Ebook not found"));
+
+            // Create temporary user for guest order
+            String generatedPassword = UUID.randomUUID().toString().substring(0, 12);
+            User savedUser = userService.createUserFromPayment(email, fullName, whatsapp, generatedPassword);
+            
+            // Create transaction
+            Transaction transaction = transactionService.createTransaction(savedUser, ebook, ebook.getPrice(), "GUEST_ORDER");
+            
+            // Redirect to payment page with guest payment options
+            String redirectUrl = midtransService.createPaymentTransaction(savedUser, ebook, "qris");
+            return "redirect:" + redirectUrl;
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
     @PostMapping("/api/payment/notification")
     public ResponseEntity<?> handlePaymentNotification(@RequestBody String payload) {
         try {

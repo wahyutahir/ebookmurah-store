@@ -58,31 +58,44 @@
                         </div>
                     </div>
 
-                    <!-- Payment Options -->
+                    <!-- Guest Checkout Form -->
                     <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
-                        <h3 class="text-xl font-semibold mb-4">Pilih Metode Pembayaran</h3>
-                        <form th:action="@{/payment/create}" method="post">
+                        <h3 class="text-xl font-semibold mb-4">Form Pembelian</h3>
+                        <p class="text-zinc-400 mb-6 text-sm">Isi data Anda untuk melanjutkan pembelian</p>
+                        <form th:action="@{/payment/guest-order}" method="post">
                             <input type="hidden" name="ebookId" th:value="${ebook.id}">
                             
-                            <div class="space-y-3 mb-6">
-                                <label class="flex items-center p-3 bg-zinc-800 rounded-lg cursor-pointer hover:bg-zinc-700 transition">
-                                    <input type="radio" name="paymentMethod" value="qris" class="mr-3" checked>
-                                    <span>QRIS (Scan QR Code)</span>
-                                </label>
-                                <label class="flex items-center p-3 bg-zinc-800 rounded-lg cursor-pointer hover:bg-zinc-700 transition">
-                                    <input type="radio" name="paymentMethod" value="va" class="mr-3">
-                                    <span>Virtual Account (BCA, BNI, BRI, Mandiri)</span>
-                                </label>
-                                <label class="flex items-center p-3 bg-zinc-800 rounded-lg cursor-pointer hover:bg-zinc-700 transition">
-                                    <input type="radio" name="paymentMethod" value="ewallet" class="mr-3">
-                                    <span>E-Wallet (GoPay, OVO, DANA, ShopeePay)</span>
-                                </label>
+                            <div class="space-y-4 mb-6">
+                                <div>
+                                    <label class="block text-zinc-300 mb-2 font-medium">Nama Lengkap</label>
+                                    <input type="text" name="fullName" required
+                                           class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                                           placeholder="Masukkan nama lengkap">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-zinc-300 mb-2 font-medium">Email</label>
+                                    <input type="email" name="email" required
+                                           class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                                           placeholder="email@example.com">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-zinc-300 mb-2 font-medium">WhatsApp</label>
+                                    <input type="tel" name="whatsapp" required
+                                           class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition"
+                                           placeholder="08123456789">
+                                </div>
                             </div>
 
                             <button type="submit" class="w-full gold-gradient text-zinc-900 font-bold py-3 rounded-lg hover:opacity-90 transition">
-                                Beli Sekarang
+                                Lanjut ke Pembayaran
                             </button>
                         </form>
+                        
+                        <div class="mt-4 text-center">
+                            <p class="text-zinc-500 text-sm">Sudah punya akun? <a th:href="@{/login}" class="text-gold-400 hover:text-gold-300">Login di sini</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
