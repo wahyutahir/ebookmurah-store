@@ -1,163 +1,41 @@
 <!DOCTYPE html>
-<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<html lang="id" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${title} ?: 'EbookMurah Store'">EbookMurah Store</title>
+    
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script src="https://cdn.tailwindcss.com" crossorigin="anonymous"></script>
-    <script>
-        // Fallback if Tailwind fails to load
-        if (typeof tailwind === 'undefined') {
-            console.warn('Tailwind CDN failed to load, using fallback CSS');
-        }
-    </script>
-    <noscript>
-        <style>
-            /* Basic styles for users without JavaScript */
-            body { background-color: #09090b; color: #fafafa; }
-            img { max-width: 100%; height: auto; }
-            .gold-text { color: #fbbf24; }
-            .gold-gradient { background: linear-gradient(135deg, #fbbf24, #d97706); }
-        </style>
-    </noscript>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        zinc: {
-                            50: '#fafafa',
-                            100: '#f4f4f5',
-                            200: '#e4e4e7',
-                            300: '#d4d4d8',
-                            400: '#a1a1aa',
-                            500: '#71717a',
-                            600: '#52525b',
-                            700: '#3f3f46',
-                            800: '#27272a',
-                            900: '#18181b',
-                            950: '#09090b',
-                        },
-                        gold: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        /* Base styles - fallback if Tailwind doesn't load */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .gold-gradient { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important; }
+        .gold-text { 
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important; 
+            -webkit-background-clip: text !important; 
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
         }
-        body {
-            background-color: #09090b;
-            color: #fafafa;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: cover;
-            display: block;
-        }
-        .gold-gradient {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
-        }
-        .gold-text {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        /* Container fixes */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        /* Button fallback styles */
-        button, .btn {
-            cursor: pointer;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-        button:hover, .btn:hover {
-            opacity: 0.9;
-        }
-        /* Card fallback styles */
-        .card {
-            background-color: #18181b;
-            border: 1px solid #27272a;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-        }
-        /* Navigation fallback */
-        nav {
-            background-color: #18181b;
-            border-bottom: 1px solid #27272a;
-            padding: 1rem 0;
-        }
-        nav a {
-            color: #a1a1aa;
-            text-decoration: none;
-            margin-right: 1rem;
-        }
-        nav a:hover {
-            color: #fbbf24;
-        }
+        body { background-color: #09090b !important; color: #fafafa !important; }
     </style>
 </head>
 <body class="bg-[#09090b] text-[#fafafa] min-h-screen">
-    <!-- Navigation -->
     <nav class="bg-zinc-900 border-b border-zinc-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a th:href="@{/}" class="flex items-center">
-                        <span class="text-2xl font-bold gold-text">EbookMurah</span>
-                        <span class="ml-2 text-zinc-400">.store</span>
-                    </a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a th:href="@{/}" class="text-zinc-300 hover:text-gold-400 transition">Katalog</a>
-                    <div sec:authorize="isAuthenticated()">
-                        <a th:href="@{/app/dashboard}" class="text-zinc-300 hover:text-gold-400 transition">Dashboard</a>
-                        <a th:href="@{/app/timeboxing}" class="text-zinc-300 hover:text-gold-400 transition">Program 90 Hari</a>
-                        <a th:href="@{/logout}" class="text-zinc-300 hover:text-gold-400 transition">Logout</a>
-                    </div>
-                    <div sec:authorize="isAnonymous()">
-                        <a th:href="@{/login}" class="text-zinc-300 hover:text-gold-400 transition">Login</a>
-                        <a th:href="@{/register}" class="bg-gold-600 hover:bg-gold-500 text-white px-4 py-2 rounded-lg transition">Daftar</a>
-                    </div>
-                </div>
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a th:href="@{/}" class="flex items-center">
+                <span class="text-2xl font-bold gold-text">EbookMurah</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a th:href="@{/app/dashboard}" class="text-zinc-300">Dashboard</a>
+                <a th:href="@{/logout}" class="text-zinc-300">Logout</a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main th:fragment="layout(content)">
-        <div th:replace="${content}"></div>
-    </main>
+    <div th:replace="${content}"></div>
 
-    <!-- Footer -->
-    <footer class="bg-zinc-900 border-t border-zinc-800 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center text-zinc-400">
-                <p>&copy; 2024 EbookMurah Store. All rights reserved.</p>
-                <p class="mt-2 text-sm">Transformasi diri melalui literasi berkualitas.</p>
-            </div>
-        </div>
+    <footer class="bg-zinc-900 border-t border-zinc-800 py-8 mt-12 text-center text-zinc-400">
+        <p>&copy; 2024 EbookMurah Store</p>
     </footer>
 </body>
 </html>
