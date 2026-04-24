@@ -18,8 +18,12 @@ public class PublicController {
 
     @GetMapping("/")
     public String home(Model model) {
-        List<Ebook> ebooks = ebookService.getAllActiveEbooks();
-        model.addAttribute("ebooks", ebooks);
+        try {
+            List<Ebook> ebooks = ebookService.getAllActiveEbooks();
+            model.addAttribute("ebooks", ebooks != null ? ebooks : List.of());
+        } catch (Exception e) {
+            model.addAttribute("ebooks", List.of());
+        }
         return "index";
     }
 

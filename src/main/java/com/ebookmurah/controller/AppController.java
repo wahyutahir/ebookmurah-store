@@ -29,12 +29,18 @@ public class AppController {
 
     @GetMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal User user, Model model) {
+        if (user == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("user", user);
         return "app/dashboard";
     }
 
     @GetMapping("/generator")
     public String generator(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
+        if (user == null) {
+            return "redirect:/login";
+        }
         // Check if user has paid purchase
         if (!transactionService.hasPaidPurchase(user.getId())) {
             redirectAttributes.addFlashAttribute("error", "Fitur ini hanya tersedia setelah pembelian ebook. Silakan beli ebook terlebih dahulu!");
@@ -62,6 +68,9 @@ public class AppController {
 
     @GetMapping("/timeboxing")
     public String timeboxing(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
+        if (user == null) {
+            return "redirect:/login";
+        }
         // Check if user has paid purchase
         if (!transactionService.hasPaidPurchase(user.getId())) {
             redirectAttributes.addFlashAttribute("error", "Program 90 Hari hanya tersedia setelah pembelian ebook. Silakan beli ebook terlebih dahulu!");
