@@ -15,8 +15,8 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <!-- Cover Image -->
                 <div class="bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
-                    <div class="aspect-[3/4] flex items-center justify-center">
-                        <div th:if="${ebook.coverImageUrl}">
+                    <div class="aspect-[3/4] flex items-center justify-center overflow-hidden">
+                        <div th:if="${ebook.coverImageUrl}" class="w-full h-full overflow-hidden">
                             <img th:src="${ebook.coverImageUrl}" th:alt="${ebook.title}" class="w-full h-full object-cover">
                         </div>
                         <div th:unless="${ebook.coverImageUrl}" class="text-zinc-600">
