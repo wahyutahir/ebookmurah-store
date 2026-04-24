@@ -7,6 +7,7 @@ import com.ebookmurah.service.TimeboxingService;
 import com.ebookmurah.service.TransactionService;
 import com.ebookmurah.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/app")
 @RequiredArgsConstructor
@@ -29,23 +31,37 @@ public class AppController {
 
     @GetMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal User user, Model model) {
+        log.info("DASHBOARD ACCESS - User: {}", user != null ? user.getEmail() : "NULL");
+        
         if (user == null) {
+            log.warn("User is null, redirecting to login");
             return "redirect:/login";
         }
+        
+        log.info("User authenticated: {} ({})", user.getFullName(), user.getEmail());
         model.addAttribute("user", user);
         return "app/dashboard";
     }
 
     @GetMapping("/generator")
     public String generator(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
+        log.info("GENERATOR ACCESS - User: {}", user != null ? user.getEmail() : "NULL");
+        
         if (user == null) {
+            log.warn("User is null, redirecting to login");
             return "redirect:/login";
         }
+        
         // Check if user has paid purchase
-        if (!transactionService.hasPaidPurchase(user.getId())) {
+        boolean hasPaid = transactionService.hasPaidPurchase(user.getId());
+        log.info("User {} has paid purchase: {}", user.getEmail(), hasPaid);
+        
+        if (!hasPaid) {
+            log.warn("User {} has no paid purchase, redirecting to catalog", user.getEmail());
             redirectAttributes.addFlashAttribute("error", "Fitur ini hanya tersedia setelah pembelian ebook. Silakan beli ebook terlebih dahulu!");
             return "redirect:/";
         }
+        
         model.addAttribute("user", user);
         return "app/generator";
     }
