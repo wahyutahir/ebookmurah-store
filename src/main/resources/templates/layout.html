@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${title} ?: 'EbookMurah Store'">EbookMurah Store</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <script src="https://cdn.tailwindcss.com" crossorigin="anonymous"></script>
     <script>
         // Fallback if Tailwind fails to load
@@ -118,7 +118,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-zinc-950 text-zinc-100" style="background-color: #09090b; color: #fafafa;">
+<body class="bg-[#09090b] text-[#fafafa] min-h-screen">
     <!-- Navigation -->
     <nav class="bg-zinc-900 border-b border-zinc-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
